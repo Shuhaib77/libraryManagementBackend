@@ -44,9 +44,11 @@ export const updateBook = async (req, res) => {
   const { id } = req.params;
   const image = req.cloudinaryImageUrl;
   const body = req.body;
+  console.log(body,"body");
+  
 
   if (!id) {
-    return res.status(400).json({ message: "Invalid book ID!" });
+    return res.status(400).json({ message: "Invalid book id!" });
   }
 
   const data = await updateBookSrevice(id, body, image);
