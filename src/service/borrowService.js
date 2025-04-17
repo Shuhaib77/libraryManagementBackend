@@ -23,7 +23,11 @@ export const borrowReturnService = async (bookId, userId) => {
   if (!bookId || !userId) {
     throw new Error("book,user not found");
   }
+  console.log(bookId, "bookideeee");
+
   const book = await Book.findById(bookId);
+  console.log(book, "boonkeeeee");
+
   if (!book) {
     throw new Error("book  not found");
   }
@@ -43,4 +47,11 @@ export const borrowReturnService = async (bookId, userId) => {
   await borrowRecord.save();
   await Book.findByIdAndUpdate(bookId, { $inc: { availableCopie: 1 } });
   return borrowRecord;
+};
+
+export const borrowByUserService = async (userId) => {
+  const borrowBooks = await Borrow.find({ user: userId, returned: false })
+    .populate("book")
+    .populate("user");
+  return borrowBooks;
 };
